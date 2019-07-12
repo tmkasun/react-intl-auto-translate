@@ -1,0 +1,21 @@
+{
+  "name": "react-intl-translator",
+  "version": "1.0.0",
+  "description": "Translate react-intl locale files to any given locale code",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "keywords": [
+    "react",
+    "intl",
+    "i18n",
+    "auto",
+    "translator"
+  ],
+  "author": "tmkasun",
+  "license": "MIT",
+  "dependencies": {
+    "translate-json-object": "^2.3.3"
+  }
+}
