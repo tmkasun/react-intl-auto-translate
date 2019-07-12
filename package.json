@@ -1,10 +1,13 @@
 {
-  "name": "react-intl-translator",
-  "version": "1.0.0",
-  "description": "Translate react-intl locale files to any given locale code",
+  "name": "react-intl-auto-translator",
+  "version": "1.0.2",
+  "description": "Translate react-intl internationalization (i18n) locale files to any given locale code",
   "main": "index.js",
   "scripts": {
     "test": "npm test"
+  },
+  "bin": {
+    "intl-translate": "./src/index.js"
   },
   "keywords": [
     "react",

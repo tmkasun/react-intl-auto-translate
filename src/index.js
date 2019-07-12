@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 // Require the module and instantiate instance
 var TJO = require("translate-json-object")();
 const fs = require("fs");
