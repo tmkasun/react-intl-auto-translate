@@ -20,7 +20,9 @@ intl-translate {/path/to/source/locale/en.json} {target_local_code} {api_key}
 ```
 
 {target_local} = File location of the source locale file
+
 [{target_local_code}](https://cloud.google.com/translate/docs/languages) = Locale code that you want to convert the source file
+
 {api_key} = Google cloud api key for Translate cloud service
 
 
