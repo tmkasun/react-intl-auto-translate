@@ -20,7 +20,7 @@ You could use this tool to automate the deployment process of your React app tha
 ## Command line arguments
 
 ```
-intl-translate {/path/to/source/locale/en.json} {source_local_code} {api_key}
+intl-translate {/path/to/source/locale/en.json} {target_local_code} {api_key}
 ```
 
 {source_local} = File location of the source locale file
