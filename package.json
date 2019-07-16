@@ -1,6 +1,6 @@
 {
   "name": "react-intl-auto-translator",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Translate react-intl internationalization (i18n) locale files to any given locale code",
   "main": "index.js",
   "scripts": {
@@ -19,6 +19,7 @@
   "author": "tmkasun",
   "license": "MIT",
   "dependencies": {
-    "translate-json-object": "^2.3.3"
+    "@google-cloud/translate": "^4.1.1",
+    "cli-progress": "^2.1.1"
   }
 }

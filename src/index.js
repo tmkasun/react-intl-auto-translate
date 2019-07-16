@@ -1,35 +1,66 @@
 #!/usr/bin/env node
-// Require the module and instantiate instance
-var TJO = require("translate-json-object")();
+// Imports the Google Cloud client library
+const { Translate } = require("@google-cloud/translate");
+const _cliProgress = require("cli-progress");
 const fs = require("fs");
+// create a new progress bar instance and use shades_classic theme
+const progressBar = new _cliProgress.Bar(
+  {},
+  _cliProgress.Presets.shades_classic
+);
 
-let [command, script, source, locale, apiKey] = process.argv;
-
-if(!source) {
-  const errorMessage = "Require a source language file!";
-  console.error(errorMessage);
-  throw new Error(errorMessage);
+function addNoTranslate(sourceString) {
+  return sourceString
+    .replace("{", '<span class="notranslate">')
+    .replace("}", "</span>");
 }
-  locale = locale || "si";
 
-console.log("Initializing google translator...")
-TJO.init({
-  googleApiKey: apiKey || "AIzaSyB6kvTc-VTltJgoLEUEb_lWGH27ujX-P88"
-});
+function removeNoTranslate(sourceString) {
+  return sourceString
+    .replace('<span class="notranslate">', "{")
+    .replace("</span>", "}");
+}
 
-console.log("Reading source language file...")
-let rawData = fs.readFileSync(source);
-let jsonData = JSON.parse(rawData);
+async function main(args) {
+  const [sourceFile, targetLanguageCode='si', keyFilename] = args;
+  let translateOptions;
+  if (!keyFilename) {
+    translateOptions = {
+      key: Buffer.from(
+        "QUl6YVN5QW9mcnlzSzJxeDVkZnlBZnRSNk15RXhwZ0xlVy1rNzlB",
+        "base64"
+      ).toLocaleString()
+    };
+  } else {
+    translateOptions = { keyFilename };
+  }
+  // Instantiates a client
+  console.log("Instantiating Google client");
+  const translate = new Translate(translateOptions);
 
-console.log("Translating ...")
+  let rawData = fs.readFileSync(sourceFile);
+  let jsonData = JSON.parse(rawData);
 
-TJO.translate(jsonData, locale)
-  .then(function(data) {
-    console.log("Translation completed!")
-    const target = locale + ".json";
-    console.log("Writing target file " + target);
-    fs.writeFileSync(target, JSON.stringify(data, null, 4));
-  })
-  .catch(function(err) {
-    console.log("error ", err);
-  });
+  const translatedObject = {};
+  let numberOfKeys = 0;
+  console.log("Translating ...");
+  progressBar.start(Object.keys(jsonData).length, 0);
+  for (const [key, value] of Object.entries(jsonData)) {
+    const [translation] = await translate.translate(
+      addNoTranslate(value),
+      targetLanguageCode
+    );
+    translatedObject[key] = removeNoTranslate(translation);
+    numberOfKeys++;
+    progressBar.update(numberOfKeys);
+  }
+  progressBar.stop();
+  console.log(`${numberOfKeys} keys translated successfully!`);
+  const targetFile = targetLanguageCode + ".json";
+  console.log(`Writing ${targetFile} . . .`);
+
+  fs.writeFileSync(targetFile, JSON.stringify(translatedObject, null, 4));
+}
+
+const args = process.argv.slice(2);
+main(args).catch(console.error);
