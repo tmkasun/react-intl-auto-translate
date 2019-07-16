@@ -13,15 +13,21 @@ npm install -g react-intl-auto-translator
 intl-translate /path/to/site/public/locales/en.json es
 ```
 
+## Usage
+
+You could use this tool to automate the deployment process of your React app that has used `react-intl` for i18n.
+
 ## Command line arguments
 
 ```
 intl-translate {/path/to/source/locale/en.json} {target_local_code} {api_key}
 ```
 
-{target_local} = File location of the source locale file
+{source_local} = File location of the source locale file
+
 [{target_local_code}](https://cloud.google.com/translate/docs/languages) = Locale code that you want to convert the source file
-{api_key} = Google cloud api key for Translate cloud service
+
+{api_key} = Google cloud api key for Translator cloud service
 
 
 ## Locale codes
