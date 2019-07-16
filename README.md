@@ -20,14 +20,14 @@ You could use this tool to automate the deployment process of your React app tha
 ## Command line arguments
 
 ```
-intl-translate {/path/to/source/locale/en.json} {target_local_code} {api_key}
+intl-translate {/path/to/source/locale/en.json} {target_local_code} {path_to_key_file}
 ```
 
 {source_local} = File location of the source locale file
 
 [{target_local_code}](https://cloud.google.com/translate/docs/languages) = Locale code that you want to convert the source file
 
-{api_key} = Google cloud api key for Translator cloud service
+{path_to_key_file} = Google cloud api key file for Translator cloud service, This is a JSON file containing the private key, token urls etc...
 
 
 ## Locale codes
@@ -139,3 +139,7 @@ Yiddish	yi
 Yoruba	yo
 Zulu	zu
 ```
+
+## TODO
+
+- Use google client library batch upload with 128 array size max spliced.
